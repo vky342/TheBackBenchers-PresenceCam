@@ -14,6 +14,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,17 +22,24 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ButtonElevation
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -44,12 +52,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import com.example.visualattendanceapp.data.RecognizeResponse
@@ -58,6 +68,7 @@ import com.example.visualattendanceapp.data.uriToMultipart
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
+import java.nio.file.WatchEvent
 
 
 // API Response Model
@@ -67,6 +78,7 @@ data class ApiResponse(
     val allFaces: String           // base64 image string
 )
 
+@Preview
 @Composable
 fun HomeScreen() {
     val context = LocalContext.current
@@ -145,33 +157,51 @@ fun HomeScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = Color(24, 23, 23))
             .padding(16.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("📸 Visual Attendance", style = MaterialTheme.typography.headlineMedium)
+        Text(" ⎧●⎫ Visual", textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth(),color = Color(238, 238, 238),style = MaterialTheme.typography.headlineLarge)
+        Text(" Attendance",textAlign = TextAlign.Left, modifier = Modifier.fillMaxWidth(),color = Color(238, 238, 238),style = MaterialTheme.typography.headlineLarge)
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(35.dp))
 
         // Pick/Take Photo Buttons
         Row(
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp,Alignment.CenterHorizontally),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Button(onClick = { galleryLauncher.launch(arrayOf("image/*")) }) {
-                Text("📂 Upload")
+            Button(modifier = Modifier.height(50.dp).wrapContentWidth().shadow(shape = RoundedCornerShape(25), elevation = 4.dp),colors = ButtonDefaults.buttonColors().copy(containerColor = Color(70, 138, 154)),
+                shape = RoundedCornerShape(25),
+                onClick = { galleryLauncher.launch(arrayOf("image/*")) }) {
+                Text("⎜▲⎟  Upload",style = MaterialTheme.typography.titleMedium, color = Color(
+                    0,
+                    0,
+                    0,
+                    255
+                ))
             }
-            Button(onClick = {
+            Button(modifier = Modifier.height(50.dp).wrapContentWidth().shadow(shape = RoundedCornerShape(25), elevation = 4.dp),colors = ButtonDefaults.buttonColors().copy(containerColor = Color(138, 154, 70)),
+                shape = RoundedCornerShape(25),
+                onClick = {
                 cameraLauncher.launch()
             }) {
-                Text("📷 Camera")
+                Text("⎜⏣⎟  Capture",style = MaterialTheme.typography.titleMedium, color = Color(
+                    0,
+                    0,
+                    0,
+                    255
+                )
+                )
             }
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(35.dp))
 
         // Send / Reset Button
-        Button(
+        Button(modifier = Modifier.height(50.dp).wrapContentWidth().shadow(shape = RoundedCornerShape(25), elevation = 4.dp),
+            shape = RoundedCornerShape(25),
             onClick = {
                 if (apiResponse == null) {
                     // SEND
@@ -216,9 +246,9 @@ fun HomeScreen() {
                 }
             },
             enabled = selectedPhotoUri != null && !isLoading,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = if (apiResponse == null) MaterialTheme.colorScheme.primary
-                else MaterialTheme.colorScheme.error
+            colors = ButtonDefaults.buttonColors(disabledContainerColor = Color(30, 28, 28, 255),
+                containerColor = if (apiResponse == null) Color(70, 138, 154)
+                else Color(84, 18, 18)
             )
         ) {
             if (isLoading) {
@@ -228,21 +258,27 @@ fun HomeScreen() {
                     modifier = Modifier.size(20.dp)
                 )
             } else {
-                Text(if (apiResponse == null) "🚀 Send" else "🔄 Reset")
+                Text(if (apiResponse == null) "⎜▶︎⎜ Send" else " ✖︎ Reset",style = MaterialTheme.typography.titleMedium, color = Color(
+                    0,
+                    0,
+                    0,
+                    255
+                ))
             }
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(28.dp))
 
         // Recognized list
-        Text("✅ Recognized Enrollments:", style = MaterialTheme.typography.titleMedium)
+        Text("Recognized Enrollments",color = Color(238, 238, 238),style = MaterialTheme.typography.titleLarge)
+        Spacer(modifier = Modifier.height(28.dp))
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)
+                .heightIn(50.dp,500.dp)
         ) {
             items(recognizedList) { enrollNo ->
-                Text("- $enrollNo", modifier = Modifier.fillMaxWidth(), textAlign = TextAlign.Center,style = MaterialTheme.typography.bodyLarge)
+                Text("- $enrollNo", modifier = Modifier.fillMaxWidth(), color = Color(238, 238, 238),textAlign = TextAlign.Center,style = MaterialTheme.typography.titleMedium)
             }
         }
 
@@ -250,23 +286,37 @@ fun HomeScreen() {
         Spacer(modifier = Modifier.height(16.dp))
 
         // Add manually
-        Button(onClick = { showAddDialog = true }) {
-            Text("➕ Add Enroll No Manually")
+        Button(modifier = Modifier.height(50.dp).wrapContentWidth().shadow(shape = RoundedCornerShape(25), elevation = 5.dp),colors = ButtonDefaults.buttonColors().copy(containerColor = Color(70, 138, 154)),
+            shape = RoundedCornerShape(25),
+            onClick = { showAddDialog = true }) {
+            Text(" +  Add Manually",style = MaterialTheme.typography.titleMedium, color = Color(
+                0,
+                0,
+                0,
+                255
+            ))
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Save PDF
-        Button(onClick = {
+        Button(modifier = Modifier.height(50.dp).wrapContentWidth().shadow(shape = RoundedCornerShape(25), elevation = 4.dp),colors = ButtonDefaults.buttonColors().copy(containerColor = Color(138, 154, 70)),
+            shape = RoundedCornerShape(25),
+            onClick = {
             createDocumentLauncher.launch("attendance_list.pdf")
         }) {
-            Text("💾 Save as PDF")
+            Text("❖ Save as PDF",style = MaterialTheme.typography.titleMedium, color = Color(
+                0,
+                0,
+                0,
+                255
+            ))
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         apiResponse?.let { response ->
-            Text("Detected Faces:", style = MaterialTheme.typography.titleMedium)
+            Text("Detected Faces:",style = MaterialTheme.typography.titleSmall, color = Color(238, 238, 238))
 
             val imagesBase64 = listOfNotNull(
                 response.annotated_all.takeIf { it.isNotBlank() },
@@ -292,15 +342,19 @@ fun HomeScreen() {
                     itemsIndexed(imagesBase64) { index, base64Str ->
                         val imageBytes = android.util.Base64.decode(base64Str, android.util.Base64.DEFAULT)
                         val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                        Image(
-                            bitmap = bitmap.asImageBitmap(),
-                            contentDescription = "Recognized Face",
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(imagesHeights[index])
-                                .padding(8.dp),
-                            contentScale = ContentScale.FillWidth
-                        )
+
+
+                            Image(
+                                bitmap = bitmap.asImageBitmap(),
+                                contentDescription = "Recognized Face",
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(imagesHeights[index])
+                                    .padding(8.dp),
+                                contentScale = ContentScale.FillWidth
+                            )
+
+
                     }
                 }
             } else {
