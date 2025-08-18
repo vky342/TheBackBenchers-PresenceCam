@@ -3,7 +3,7 @@ Visual Attendance system allowing coordinator to extract attendance via clicked 
 
 ## Overview
 This project offers a modern and efficient solution for event coordinators to manage attendance for large audiences.  
-By leveraging **computer vision** and **facial recognition**, the application automates the process of taking attendance from a single group photograph, eliminating the need for manual check-ins.  
+By leveraging **computer vision** and **facial recognition**, the application automates the process of taking attendance from a single group photograph, eliminating the need for manual check ins.  
 
 It is ideal for **conferences, workshops, and large gatherings** where a quick and accurate attendance record is crucial.
 
