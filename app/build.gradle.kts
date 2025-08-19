@@ -68,5 +68,7 @@ dependencies {
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.36.0")
 
     implementation("androidx.compose.foundation:foundation:1.6.0")
+    implementation("io.coil-kt:coil-compose:2.6.0")
+
 
 }
