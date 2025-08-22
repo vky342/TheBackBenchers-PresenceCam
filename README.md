@@ -7,7 +7,7 @@ By leveraging **computer vision** and **facial recognition**, the application au
 
 It is ideal for **conferences, workshops, and large gatherings** where a quick and accurate attendance record is crucial.
 
----
+----
 
 ## Features
 - **Automated Face Detection**: Automatically identify and count individual faces in a group photograph, even in crowded settings.  
@@ -18,7 +18,7 @@ It is ideal for **conferences, workshops, and large gatherings** where a quick a
   - List of registered individuals who were not found in the photo  
 - **Simple User Interface**: A clean and user-friendly web interface makes it easy for coordinators to upload a photo and get an attendance report in just a few clicks.  
 
----
+----
 
 ## How It Works
 The process is straightforward and fast:
@@ -28,7 +28,7 @@ The process is straightforward and fast:
 3. **Processing**: The facial recognition model scans the photo, locates each face, and then matches these faces to the data from the registration file.  
 4. **Report Generation**: A final attendance report is generated, showing who was present and who was not.  
 
----
+----
 
 ## License
 This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
