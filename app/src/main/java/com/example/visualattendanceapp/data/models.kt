@@ -91,7 +91,7 @@ object RetrofitInstance {
 
     val api: ApiService by lazy {
         Retrofit.Builder()
-            .baseUrl("https://ankit970606-fast-api.hf.space/")
+            .baseUrl("http://10.239.80.105:8000/")
             .client(okHttpClient)//
             .addConverterFactory(GsonConverterFactory.create())
             .build()

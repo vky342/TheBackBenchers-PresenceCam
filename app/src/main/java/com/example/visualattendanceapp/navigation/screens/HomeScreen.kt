@@ -184,14 +184,7 @@ fun HomeScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            " ⎧●⎫ Visual",
-            textAlign = TextAlign.Left,
-            modifier = Modifier.fillMaxWidth(),
-            color = Color(238, 238, 238),
-            style = MaterialTheme.typography.headlineLarge
-        )
-        Text(
-            " Attendance",
+            "|❂| Presence Cam",
             textAlign = TextAlign.Left,
             modifier = Modifier.fillMaxWidth(),
             color = Color(238, 238, 238),
@@ -300,6 +293,7 @@ fun HomeScreen() {
                                 }
                             }
                         } catch (e: Exception) {
+                            Log.e("Error","Exception: ${e.message}")
                             Toast.makeText(context, "Exception: ${e.message}", Toast.LENGTH_SHORT)
                                 .show()
                         } finally {
@@ -354,7 +348,7 @@ fun HomeScreen() {
                 .fillMaxWidth()
                 .heightIn(50.dp, 500.dp)
         ) {
-            items(recognizedList) { enrollNo ->
+            items(recognizedList.sorted()) { enrollNo ->
                 Text(
                     "- $enrollNo",
                     modifier = Modifier.fillMaxWidth(),
