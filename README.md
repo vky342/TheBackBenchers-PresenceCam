@@ -107,9 +107,9 @@ Alternatively you can build and run via Docker if a `Dockerfile` is supplied.
 
 Screenshots used in the app are included in the `assets/` folder:
 
-![Register Screen](assets/register_screen.jpeg)
+![Register Screen](ScreenShots/screenshot2.jpeg)
 
-![Home / Recognize Screen](assets/home_screen.jpeg)
+![Home / Recognize Screen](ScreenShots/screenshot1.jpeg)
 
 ## Future Enhancements
 
