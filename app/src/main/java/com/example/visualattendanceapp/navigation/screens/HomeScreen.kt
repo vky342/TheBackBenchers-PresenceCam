@@ -1,13 +1,11 @@
 package com.example.visualattendanceapp.navigation.screens
 
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
 import android.net.Uri
-import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
@@ -30,9 +28,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -60,7 +55,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -68,20 +62,16 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import coil.size.Precision
 import coil.size.Size
 import com.example.visualattendanceapp.data.RecognizeResponse
 import com.example.visualattendanceapp.data.RetrofitInstance
 import com.example.visualattendanceapp.data.uriToMultipart
 import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileOutputStream
-import java.nio.file.WatchEvent
 
 
 // API Response Model
@@ -91,7 +81,7 @@ data class ApiResponse(
     val allFaces: String           // base64 image string
 )
 
-@Preview
+
 @Composable
 fun HomeScreen() {
     val context = LocalContext.current

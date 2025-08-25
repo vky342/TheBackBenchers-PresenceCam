@@ -1,7 +1,0 @@
-fastapi
-uvicorn[standard]
-insightface
-onnxruntime
-numpy
-opencv-python-headless
-python-multipart
